@@ -15,7 +15,7 @@ public abstract class BankAccount {
 	private double accountTotal;
 	private Date date;
 	private int term;
-	
+	List<Transaction> transactions;
 	
 	
 	 BankAccount(double balance, double interestRate){
@@ -78,6 +78,7 @@ public abstract class BankAccount {
 	{
 		this.futureValue = this.balance * Math.pow((1+ interestRate ), term);
 		return this.futureValue;
+		
 	}
 
 	
@@ -107,14 +108,14 @@ public abstract class BankAccount {
 	
 	
 	public void addTransaction(Transaction transaction){
-		if(MeritBank.processTransaction(true)) {
-			
-		}
+	//	if(MeritBank.processTransaction(true)) {}
+		transactions.add(transaction);	
+		
 		
 	}
 	
 	public List<Transaction>getTransactions(){
-		return null;
+		return transactions;
 	}
 	
 	public static BankAccount readFromString()

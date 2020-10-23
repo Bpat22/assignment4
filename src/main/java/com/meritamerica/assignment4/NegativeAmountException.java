@@ -6,6 +6,7 @@ public class NegativeAmountException extends Exception{
 	//public NegativeAmountException(String errorMessage, Throwable e) {
 
 		super(errorMessage);
+		
 
 	}
 

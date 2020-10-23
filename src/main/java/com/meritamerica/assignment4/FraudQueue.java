@@ -11,10 +11,11 @@ public class FraudQueue {
 	}
 
 	public void addTransaction(Transaction transaction) {
-		
+	this.transaction = transaction.isProcessedByFraudTeam();
 	}
 
 	public Transaction getTransaction() {
 		return getTransaction();
 	}
+	Boolean transaction;
 }

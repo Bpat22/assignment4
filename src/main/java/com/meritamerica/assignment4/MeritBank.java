@@ -178,6 +178,9 @@ public class MeritBank{
 		{
 			e.getStackTrace();
 			System.out.println("File not found");
+		} catch (ExceedsCombinedBalanceLimitException e) {
+			
+			e.printStackTrace();
 		}
 		return true; 
 	}
@@ -202,23 +205,28 @@ public class MeritBank{
 	
 	public static double recursiveFutureValue(double amount, int years, double interestRate) {
 		//no math.pow
-		
-		return (amount + recursiveFutureValue(1 + interestRate, years -1));
+		double temp = 0;
+		double a = 1 + interestRate;
+		for(int i = 1; i == years; i++) {
+			temp = temp * a;
+		}
+		return (amount * temp);
 	}
 	
 	
 	public static boolean processTransaction(Transaction transaction) throws NegativeAmountException, ExceedsAvailableBalanceException, ExceedsFraudSuspicionLimitException{
 		//transaction.process();
+		
 		try {
-			transaction.processTransaction();
-			//return true;
+			transaction.process();
+			return true;
 		}catch(NegativeAmountException e) {
 			throw e;
-		}catch(ExceedsAvailableBalanceException e ) {
+		}catch(ExceedsAvailableBalanceException e) {
 			throw e;
 		}catch(ExceedsFraudSuspicionLimitException e) {
-		
-		}return true;
+			throw e;
+		}//return true;
 	
 	
 }

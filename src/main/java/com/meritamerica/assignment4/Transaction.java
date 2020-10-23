@@ -1,7 +1,10 @@
 package com.meritamerica.assignment4;
 
 import java.util.Date;
-
+import java.io.*;
+import java.io.ObjectInputStream.GetField;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 public abstract class Transaction {
 
 	BankAccount sourceAccount;
@@ -38,17 +41,49 @@ public abstract class Transaction {
 	}
 
 	public String writeToString() {
-		return null;
+		String temp;
+		
+		temp = 	getSourceAccount().toString() + "," + getAmount() + "," +	getTransactionDate() + "\n";
+		return temp;
 	}
 
 	public static Transaction readFromString(String transactionDataString) {
-
-		//String[] values = transactionDataString.split(",");
+		String[] info = new String[4];
+		info = transactionDataString.split(",");
+		BankAccount account = null;
+		int accountNum = (int) account.getAccountNumber();
+		double balance, interest;
+		Date opened = null;
+		try {
+			accountNum = Integer.parseInt(info[1]);
+			balance = Double.parseDouble(info[2]);
+			opened = new SimpleDateFormat("dd/MM/yyyy").parse(info[3]);
+		}catch(NumberFormatException e ){
+			e.printStackTrace();
+		} catch (ParseException e) {
+			
+			e.printStackTrace();
+		}
+		accountNum = Integer.parseInt(info[1]);
+		balance = Double.parseDouble(info[2]);
+		try {
+			opened = new SimpleDateFormat("dd/MM/yyyy").parse(info[3]);
+		} catch (ParseException e) {
+			
+			e.printStackTrace();
+		}
+		
+		Transaction ba = null;
+		ba.setAmount(balance);
+		//ba.setSourceAccount(accountNum);
+		ba.setTransactionDate(opened);
+		
 		return null;
+		
 	}
 
-	public abstract void processTransaction() throws NegativeAmountException, ExceedsAvailableBalanceException, ExceedsFraudSuspicionLimitException;	
-
+	public abstract void process() throws NegativeAmountException, ExceedsAvailableBalanceException, ExceedsFraudSuspicionLimitException;
+	
 
 	public boolean isProcessedByFraudTeam() {
 		return isProcessed;
@@ -59,11 +94,11 @@ public abstract class Transaction {
 	}
 
 	public String getRejectionReason() {
-		return null;
+		return reason;
 	}
 
 	public void setRejectionReason(String reason) {
-
+		this.reason = reason;
 	}
 
 

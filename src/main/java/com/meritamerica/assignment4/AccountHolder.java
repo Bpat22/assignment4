@@ -244,9 +244,9 @@ public class AccountHolder implements Comparable<AccountHolder>
 	{
 		
 		CDAccount cdA = new CDAccount(offering, openingBalance);
-		DepositTransaction d = new DepositTransaction(cdA);
-		cdA.addTransaction(cdA);
-		d.process();
+		DepositTransaction d = new DepositTransaction(cdAccount,openingBalance);
+		//cdA.addTransaction(cdA);
+		//d.process();
 		
 		//this.cdAccount = new CDAccount(offering, openingBalance);
 		addCDAccount(this.cdAccount);
