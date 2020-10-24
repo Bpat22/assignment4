@@ -124,6 +124,7 @@ public class AccountHolder implements Comparable<AccountHolder>
 	public CheckingAccount addCheckingAccount(double openingBalance)throws ExceedsCombinedBalanceLimitException
 
 	{
+		
 		this.clientCheckingAccount = new CheckingAccount(openingBalance);
 		addCheckingAccount(this.clientCheckingAccount);
 		return this.clientCheckingAccount;
@@ -239,18 +240,38 @@ public class AccountHolder implements Comparable<AccountHolder>
 
 	/** -----------------------------------------------CD ACCOUNT------------------------------------------------------*/
 
-	/** Creates a CD Account*/
-	public CDAccount addCDAccount(CDOffering offering, double openingBalance) 
+	/** Creates a CD Account
+	 * @throws ExceedsFraudSuspicionLimitException */
+	public CDAccount addCDAccount(CDOffering offering, double openingBalance) throws ExceedsFraudSuspicionLimitException 
 	{
+	
+		if(openingBalance > 1000) {
+			throw  new ExceedsFraudSuspicionLimitException("Amount is $1000 or more " );
+		} else {
+			DepositTransaction d; //= new DepositTransaction(cdAccount,openingBalance);
+			CDAccount cdA = new CDAccount(offering, openingBalance);
+			addCDAccount(this.cdAccount);
+			return this.cdAccount;
+		}
+		//return null;
+	
 		
+		/*	
 		CDAccount cdA = new CDAccount(offering, openingBalance);
 		DepositTransaction d = new DepositTransaction(cdAccount,openingBalance);
 		//cdA.addTransaction(cdA);
-		//d.process();
+		
+		try {
+			d.process();
+		} catch (NegativeAmountException | ExceedsAvailableBalanceException | ExceedsFraudSuspicionLimitException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 		//this.cdAccount = new CDAccount(offering, openingBalance);
 		addCDAccount(this.cdAccount);
 		return this.cdAccount;
+		*/
 	}
 
 	/** Adds cdAccount into a CDAccounts[]*/

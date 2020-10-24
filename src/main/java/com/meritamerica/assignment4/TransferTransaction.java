@@ -10,25 +10,7 @@ public class TransferTransaction extends Transaction{
 		//this.amount = amount;
 		setAmount(amount);
 	}
-/*
-	public void processTransaction()
 
-			throws NegativeAmountException, ExceedsAvailableBalanceException, ExceedsFraudSuspicionLimitException{
-
-		if (amount < 0) {
-			throw new NegativeAmountException("cant procc neg amount");
-		}else if (amount > 1000) {
-			throw new ExceedsFraudSuspicionLimitException("cant deposite more than 1000");
-		}else if (targetAccount.getBalance() > 250000) {
-			throw new ExceedsFraudSuspicionLimitException("cant deposit this amt");
-		}else{
-			targetAccount.withdraw(amount);
-
-		}
-
-
-	}
-*/
 
 	public void process() throws NegativeAmountException, ExceedsAvailableBalanceException, ExceedsFraudSuspicionLimitException {
 		if (getAmount() < 0) {
@@ -45,7 +27,8 @@ public class TransferTransaction extends Transaction{
 			throw  new ExceedsFraudSuspicionLimitException("Amount is $1000 or more " + getAmount());
 			
 		} else {
-			
+			sourceAccount.withdraw(getAmount());
+			targetAccount.deposit(getAmount());
 		}
 	}
 }

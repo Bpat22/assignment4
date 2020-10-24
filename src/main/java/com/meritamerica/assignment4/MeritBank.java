@@ -102,9 +102,11 @@ public class MeritBank{
 			String line;
 			while((line = bR.readLine()) != null)
 			{	
-				values.add(line);								
+				values.add(line);
+				System.out.println("read from file " + values);
 			}
 			accountN = Long.parseLong(values.get(index));
+			//System.out.println("accountN " + values);
 			setAccountNumber(accountN);
 			
 			index++;        
@@ -130,7 +132,7 @@ public class MeritBank{
 				index++; 
 				
 				checkingCounter = Integer.parseInt(values.get(index));
-				
+				System.out.println("accountHold " + checkingCounter);
 				index++;
 				
 				if(checkingCounter != 0)
@@ -138,10 +140,15 @@ public class MeritBank{
 					for (int j = index ; j < checkingCounter + index ; j++) 
 					{	
 						ac.addCheckingAccount(CheckingAccount.readFromString(values.get(j)));
+					
 					}
+					System.out.println("accountHold in loop " + checkingCounter);
 				} 
 				index += checkingCounter;
+				System.out.println("end of account holder " + index);
+				
 				savingsCounter = Integer.parseInt(values.get(index));
+				
 				index++;
 
 				if(savingsCounter != 0)
@@ -149,11 +156,15 @@ public class MeritBank{
 					for(int k = index; k < savingsCounter + index; k++)
 					{
 						ac.addSavingsAccount(SavingsAccount.readFromString(values.get(k)));
+						System.out.println("saving account " + values + "\n");
 					}
 				}
 				index += savingsCounter;
-				cdAccountCounter = Integer.parseInt(values.get(index));
-
+				System.out.println("before " + savingsCounter);
+				System.out.println("before cd " + index);
+				cdAccountCounter = Integer.parseInt(values.get(index + 1)); // add plus 1
+				
+				System.out.println("cd account " + cdAccountCounter);
 				index++;
 				if(cdAccountCounter != 0)
 				{
@@ -178,9 +189,11 @@ public class MeritBank{
 		{
 			e.getStackTrace();
 			System.out.println("File not found");
+			return false;
 		} catch (ExceedsCombinedBalanceLimitException e) {
 			
 			e.printStackTrace();
+			return false;
 		}
 		return true; 
 	}
@@ -226,8 +239,8 @@ public class MeritBank{
 			throw e;
 		}catch(ExceedsFraudSuspicionLimitException e) {
 			throw e;
-		}//return true;
-	
+		} 
+		
 	
 }
 	public static FraudQueue getFraudQueue() {
