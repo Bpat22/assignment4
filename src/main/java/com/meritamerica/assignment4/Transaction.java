@@ -52,7 +52,7 @@ public abstract class Transaction {
 		info = transactionDataString.split(",");
 		BankAccount account = null;
 		int accountNum = (int) account.getAccountNumber();
-		double balance, interest;
+		double balance = 0;
 		Date opened = null;
 		try {
 			accountNum = Integer.parseInt(info[1]);
@@ -64,6 +64,7 @@ public abstract class Transaction {
 			
 			e.printStackTrace();
 		}
+		/*
 		accountNum = Integer.parseInt(info[1]);
 		balance = Double.parseDouble(info[2]);
 		try {
@@ -72,7 +73,7 @@ public abstract class Transaction {
 			
 			e.printStackTrace();
 		}
-		
+		*/
 		Transaction ba = null;
 		ba.setAmount(balance);
 		//ba.setSourceAccount(accountNum);

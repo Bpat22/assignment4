@@ -95,6 +95,7 @@ public class MeritBank{
 		int accountHolderCounter;
 		int savingsCounter;
 		int cdAccountCounter;
+		int transactionCounter;
 		int index = 0;
 		long accountN;
 		try (BufferedReader bR = new BufferedReader(new FileReader(file)) )
@@ -103,10 +104,10 @@ public class MeritBank{
 			while((line = bR.readLine()) != null)
 			{	
 				values.add(line);
-				System.out.println("read from file " + values);
+				
 			}
 			accountN = Long.parseLong(values.get(index));
-			//System.out.println("accountN " + values);
+			
 			setAccountNumber(accountN);
 			
 			index++;        
@@ -132,7 +133,7 @@ public class MeritBank{
 				index++; 
 				
 				checkingCounter = Integer.parseInt(values.get(index));
-				System.out.println("accountHold " + checkingCounter);
+				
 				index++;
 				
 				if(checkingCounter != 0)
@@ -142,10 +143,24 @@ public class MeritBank{
 						ac.addCheckingAccount(CheckingAccount.readFromString(values.get(j)));
 					
 					}
-					System.out.println("accountHold in loop " + checkingCounter);
+				
+					transactionCounter = (int) Float.parseFloat(values.get(index));
+					index ++;
+					
+					if(transactionCounter != 0) {
+						for (int a = index; a < transactionCounter + index; a++) {
+							ac.addCheckingAccount(CheckingAccount.readFromString(values.get(a)));
+						System.out.println("tran " + values);
+						}
+					
+					}
+					index += transactionCounter;
 				} 
 				index += checkingCounter;
-				System.out.println("end of account holder " + index);
+				
+				
+			
+				
 				
 				savingsCounter = Integer.parseInt(values.get(index));
 				
@@ -156,15 +171,27 @@ public class MeritBank{
 					for(int k = index; k < savingsCounter + index; k++)
 					{
 						ac.addSavingsAccount(SavingsAccount.readFromString(values.get(k)));
-						System.out.println("saving account " + values + "\n");
+						
 					}
+
+					transactionCounter = (int) Float.parseFloat(values.get(index));
+					index ++;
+					
+					if(transactionCounter != 0) {
+						for (int b = index; b < transactionCounter + index; b++) {
+							ac.addSavingsAccount(SavingsAccount.readFromString(values.get(b)));
+						System.out.println("tran " + values);
+						}
+					}
+					index += transactionCounter;
 				}
 				index += savingsCounter;
-				System.out.println("before " + savingsCounter);
-				System.out.println("before cd " + index);
-				cdAccountCounter = Integer.parseInt(values.get(index + 1)); // add plus 1
 				
-				System.out.println("cd account " + cdAccountCounter);
+			
+				
+				
+				
+				cdAccountCounter = Integer.parseInt(values.get(index)); // add plus 1
 				index++;
 				if(cdAccountCounter != 0)
 				{
@@ -172,12 +199,27 @@ public class MeritBank{
 					{
 						ac.addCDAccount(CDAccount.readFromString(values.get(x)));
 					}
+					transactionCounter = (int) Float.parseFloat(values.get(index));
+					index ++;
+					
+					if(transactionCounter != 0) {
+						for (int c = index; c < transactionCounter + index; c++) {
+							ac.addCDAccount(CDAccount.readFromString(values.get(c)));
+						System.out.println("tran " + values);
+						}
+					}
+				
+					index += transactionCounter;
 				}
+				
+				
+				
 				index += cdAccountCounter;
 			}
 
 		}catch(NumberFormatException e)
 		{
+			System.out.println("number");
 			return false;
 		} 
 		catch(NullPointerException n)
